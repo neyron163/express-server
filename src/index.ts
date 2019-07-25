@@ -6,7 +6,7 @@ import { deleteRouter, getRouter, postRouter } from './routes/';
 import { API, mongoDB } from './constants';
 
 const app = express();
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true }).then(
     () => {

@@ -10,10 +10,10 @@ postRouter.post('/list/:id', (req: Request, res: Response) => {
     const { title } = req.body;
     List.find((err, arr) => {
         const id = getElementId(arr, params.id);
-
         List.findByIdAndUpdate(id, { title }, (err, result) => {
             if (result && title) {
                 res.send({
+                    error: '',
                     success: true,
                 });
             } else {
@@ -29,12 +29,14 @@ postRouter.post('/list/:id', (req: Request, res: Response) => {
 postRouter.post('/list', (req: Request, res: Response) => {
     const { title } = req.body;
     List.find((err, arr) => {
-        const index = arr.map(element => element.id).sort();
+        const index = arr.map(element => element.id).sort((a, b) => a - b);
         List.create({ title, id: index[index.length - 1] + 1 || 0 });
     }).then(arr => {
-        const index = arr.map(element => element.id).sort();
+        const index = arr.map(element => element.id).sort((a, b) => a - b);
         res.send({
+            error: '',
             id: index[index.length - 1] + 1 || 0,
+            success: true,
         });
     });
 });
